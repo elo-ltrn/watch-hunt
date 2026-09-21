@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f1115" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Watch Hunt" />
+  <title>Watch Hunt</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <link rel="icon" href="./icon.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">WATCH HUNT</div>
+        <h1 id="pageTitle">Découvrir</h1>
+      </div>
+      <button id="headerAction" class="icon-btn" aria-label="Action">＋</button>
+    </header>
+
+    <main>
+      <section id="discoverView" class="view active">
+        <div id="emptyDiscover" class="empty-state">
+          <div class="empty-icon">⌚</div>
+          <h2>Aucune carte à swiper</h2>
+          <p>Génère ton prompt, colle-le dans ChatGPT, puis importe les résultats ici.</p>
+          <button class="primary" data-action="open-prompt">Nouvelle chasse</button>
+          <button class="secondary" data-action="open-import">Importer les résultats</button>
+        </div>
+
+        <div id="cardArea" class="card-area hidden">
+          <div id="cardStack" class="card-stack"></div>
+          <div class="swipe-actions">
+            <button class="round danger" data-swipe="left" aria-label="Rejeter">✕</button>
+            <button class="round favorite" data-action="toggle-favorite" aria-label="Favori">♥</button>
+            <button class="round success" data-swipe="right" aria-label="J'aime">✓</button>
+            <button class="round buy" data-swipe="up" aria-label="À acheter">↑</button>
+          </div>
+          <div class="swipe-hints">← Non &nbsp; · &nbsp; → J’aime &nbsp; · &nbsp; ↑ À acheter</div>
+        </div>
+      </section>
+
+      <section id="favoritesView" class="view">
+        <div id="favoritesList" class="list-grid"></div>
+      </section>
+
+      <section id="wishlistView" class="view">
+        <div id="wishlistList" class="list-grid"></div>
+      </section>
+
+      <section id="libraryView" class="view">
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="section-title">Historique</div>
+        <div id="historyList" class="list-grid"></div>
+      </section>
+
+      <section id="settingsView" class="view">
+        <div class="settings-card">
+          <h3>Nouvelle chasse</h3>
+          <p>Le prompt intègre tes goûts, ton historique et le ratio 60 % / 40 %.</p>
+          <button class="primary full" data-action="open-prompt">Générer le prompt</button>
+          <button class="secondary full" data-action="open-import">Importer les résultats</button>
+        </div>
+
+        <div class="settings-card">
+          <h3>Préférences</h3>
+          <label>Budget cible (€)
+            <input id="budgetTarget" type="number" min="1" step="1" value="100">
+          </label>
+          <label>Budget exceptionnel (€)
+            <input id="budgetMax" type="number" min="1" step="1" value="120">
+          </label>
+          <label>Résultats par chasse
+            <input id="resultCount" type="number" min="5" max="100" step="1" value="20">
+          </label>
+          <div class="ratio-row">
+            <span>Exploitation</span><strong>60 %</strong>
+            <span>Exploration</span><strong>40 %</strong>
+          </div>
+          <button class="secondary full" data-action="save-settings">Enregistrer</button>
+        </div>
+
+        <div class="settings-card">
+          <h3>Sauvegarde</h3>
+          <p>Exporte régulièrement tes données. Elles restent sur cet iPhone.</p>
+          <button class="secondary full" data-action="export-backup">Exporter sauvegarde</button>
+          <label class="file-btn full">Importer sauvegarde
+            <input id="backupFile" type="file" accept=".json,application/json" hidden>
+          </label>
+        </div>
+
+        <div class="settings-card danger-zone">
+          <h3>Réinitialisation</h3>
+          <p>Efface toutes les données locales de Watch Hunt.</p>
+          <button class="danger-btn full" data-action="reset-app">Tout effacer</button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-view="discover"><span>⌚</span><small>Découvrir</small></button>
+      <button class="nav-item" data-view="favorites"><span>♥</span><small>Favoris</small></button>
+      <button class="nav-item" data-view="wishlist"><span>↑</span><small>À acheter</small></button>
+      <button class="nav-item" data-view="library"><span>≡</span><small>Historique</small></button>
+      <button class="nav-item" data-view="settings"><span>⚙</span><small>Réglages</small></button>
+    </nav>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden">
+    <div id="modal" class="modal"></div>
+  </div>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
